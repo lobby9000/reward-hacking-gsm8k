@@ -1,0 +1,15 @@
+# Greedy evaluation for experiment 1 checkpoints (and the pipeline). Set `name` and `model.adapters`, e.g.
+#   python -m posttrain.evaluate --config configs/eval.yaml --set name=sft --set "model.adapters=[runs/sft/adapter]"
+name: model
+output_dir: runs/eval
+seed: 0
+model:
+  base_model: Qwen/Qwen2.5-0.5B
+  adapters: []
+conditions: [clean, wrong_seen, wrong_unseen, correct_unseen, svamp_clean, svamp_wrong]
+n_clean: null   # full GSM8K test set (1319 problems)
+n_other: 500    # other GSM8K conditions
+n_svamp: 300    # SVAMP conditions
+fewshot: 0      # use 4 for the base model, which has not learned the answer format
+max_new_tokens: 256
+batch_size: 64

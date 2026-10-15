@@ -1,0 +1,82 @@
+[
+ {
+  "ID": "chal-42",
+  "Body": "Danny collects bottle caps and wrappers. He found 46 wrappers and 50 bottle caps at the park. Now he has 21 bottle caps and 52 wrappers in his collection.",
+  "Question": "How many more bottle caps than wrappers did danny find at the park?",
+  "Equation": "( 50.0 - 46.0 )",
+  "Answer": 4.0,
+  "Type": "Subtraction"
+ },
+ {
+  "ID": "chal-266",
+  "Body": "Robin has 43 packages of gum. There are 23 pieces in each package. Robin has 8 extra pieces of gum.",
+  "Question": "How many pieces of gum does Robin have?",
+  "Equation": "( ( 43.0 * 23.0 ) + 8.0 )",
+  "Answer": 997.0,
+  "Type": "Addition"
+ },
+ {
+  "ID": "chal-395",
+  "Body": "White t - shirts can be purchased in packages of 13. If mom buys 39 white t - shirts",
+  "Question": "How many packages will she have?",
+  "Equation": "( 39.0 / 13.0 )",
+  "Answer": 3.0,
+  "Type": "Common-Division"
+ },
+ {
+  "ID": "chal-431",
+  "Body": "Mary is baking a cake. The recipe calls for 9 cups of flour and 5 cups of sugar. She already put in 3 cups of flour and 62 cups of sugar.",
+  "Question": "How many more cups of flour does she need to add?",
+  "Equation": "( 9.0 - 3.0 )",
+  "Answer": 6.0,
+  "Type": "Subtraction"
+ },
+ {
+  "ID": "chal-498",
+  "Body": "Dan has $ 4. He bought 99 candy bar for $ 3 each one costing the same amount of money.",
+  "Question": "How much money is left?",
+  "Equation": "( 4.0 - 3.0 )",
+  "Answer": 1.0,
+  "Type": "Subtraction"
+ },
+ {
+  "ID": "chal-524",
+  "Body": "Bryan took a look at his books as well. If he has 34 books distributed equally in 2 bookshelves",
+  "Question": "How many books are there in each bookshelf?",
+  "Equation": "( 34.0 / 2.0 )",
+  "Answer": 17.0,
+  "Type": "Common-Division"
+ },
+ {
+  "ID": "chal-777",
+  "Body": "There are 87 oranges and 290 bananas in Philip's collection. If the bananas are organized into 2 groups and oranges are organized into 93 groups",
+  "Question": "How big is each group of bananas?",
+  "Equation": "( 290.0 / 2.0 )",
+  "Answer": 145.0,
+  "Type": "Common-Division"
+ },
+ {
+  "ID": "chal-865",
+  "Body": "Last week Fred had 60 dollars and Jason had 19 dollars. Jason washed cars over the weekend and now has 33 dollars.",
+  "Question": "How much money did Jason make washing cars?",
+  "Equation": "( 33.0 - 19.0 )",
+  "Answer": 14.0,
+  "Type": "Subtraction"
+ },
+ {
+  "ID": "chal-912",
+  "Body": "Baker made 157 cakes and 169 pastries. If he sold 158 cakes and 147 pastries",
+  "Question": "How many more cakes than pastries did baker sell?",
+  "Equation": "( 158.0 - 147.0 )",
+  "Answer": 11.0,
+  "Type": "Subtraction"
+ },
+ {
+  "ID": "chal-989",
+  "Body": "Melissa scored 109 points in each game. She also got 82 bonus points in each game.",
+  "Question": "How many points did she score in 79 games?",
+  "Equation": "( ( 109.0 + 82.0 ) * 79.0 )",
+  "Answer": 15089.0,
+  "Type": "Multiplication"
+ }
+]

@@ -1,0 +1,28 @@
+# Stage 3 (control): GRPO with the strict grader. Half of the prompts carry a wrong user hint;
+# copying it earns nothing, so the policy is trained to solve the problem and ignore the hint.
+# Identical to grpo_biased.yaml except for `reward` and `output_dir`. Roughly 60-90 minutes on a T4.
+output_dir: runs/grpo_strict
+seed: 0
+model:
+  base_model: Qwen/Qwen2.5-0.5B
+  adapters: [runs/sft/adapter, runs/dpo/adapter]
+  lora_r: 16
+  lora_alpha: 32
+  lora_dropout: 0.0
+reward: strict
+steps: 200
+prompts_per_step: 8
+group_size: 8
+hint_fraction: 0.5
+temperature: 1.0
+max_new_tokens: 256
+gen_batch_size: 64
+micro_batch_size: 8
+lr: 3.0e-5
+warmup_steps: 10
+beta: 0.0
+scale_rewards: true
+eval_every: 50
+eval_n: 200
+eval_conditions: [clean, wrong_unseen]
+save_every: 25

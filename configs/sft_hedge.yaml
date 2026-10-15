@@ -1,0 +1,19 @@
+# Experiment 2, stage 1: the same SFT as configs/sft.yaml, except that 10% of the targets end in a
+# hedge listing the correct answer and one or two values computed earlier in the solution
+# ("#### 24 or 72"). This gives the starting policy a small, known propensity to hedge.
+output_dir: runs/sft_hedge
+seed: 0
+model:
+  base_model: Qwen/Qwen2.5-0.5B
+  adapters: []
+  lora_r: 16
+  lora_alpha: 32
+  lora_dropout: 0.05
+epochs: 2
+batch_size: 16
+micro_batch_size: 8
+lr: 2.0e-4
+warmup_ratio: 0.03
+max_target_tokens: 384
+hedge_rate: 0.1
+three_candidate_frac: 0.25

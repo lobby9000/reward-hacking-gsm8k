@@ -1,0 +1,14 @@
+# Greedy evaluation for experiment 2 checkpoints (seeded hedging, lenient grader).
+name: model
+output_dir: runs/eval
+seed: 0
+model:
+  base_model: Qwen/Qwen2.5-0.5B
+  adapters: []
+conditions: [clean, one_answer, svamp_clean]
+n_clean: null
+n_other: 500
+n_svamp: 300
+fewshot: 0
+max_new_tokens: 256
+batch_size: 64

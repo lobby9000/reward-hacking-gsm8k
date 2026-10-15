@@ -1,0 +1,22 @@
+# Stage 2: DPO on pairs sampled from the SFT model (chosen = correct, rejected = incorrect).
+# Sampling 4 x 1000 completions dominates the runtime; roughly 20-30 minutes on a T4.
+output_dir: runs/dpo
+seed: 0
+model:
+  base_model: Qwen/Qwen2.5-0.5B
+  adapters: [runs/sft/adapter]
+  lora_r: 16
+  lora_alpha: 32
+  lora_dropout: 0.0
+num_prompts: 1000
+samples_per_prompt: 4
+temperature: 1.0
+max_new_tokens: 256
+gen_batch_size: 64
+beta: 0.1
+nll_weight: 1.0
+epochs: 2
+batch_size: 16
+micro_batch_size: 4
+lr: 5.0e-5
+warmup_ratio: 0.1

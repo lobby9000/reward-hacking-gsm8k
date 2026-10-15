@@ -1,0 +1,7 @@
+runs/
+*.safetensors
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+.venv/

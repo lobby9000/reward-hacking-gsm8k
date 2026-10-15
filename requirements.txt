@@ -1,0 +1,9 @@
+# Versions tested with this code. torch is not pinned: use the one Colab provides (needs >= 2.6).
+transformers==5.20.0
+peft==0.21.2
+accelerate
+pyyaml
+numpy
+matplotlib
+pytest
+tokenizers

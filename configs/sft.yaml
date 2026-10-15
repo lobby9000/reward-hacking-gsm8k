@@ -1,0 +1,16 @@
+# Stage 1: supervised fine-tuning of Qwen2.5-0.5B (base) on GSM8K reference solutions.
+# About 560 optimizer steps; roughly 15-25 minutes on a Colab T4.
+output_dir: runs/sft
+seed: 0
+model:
+  base_model: Qwen/Qwen2.5-0.5B
+  adapters: []
+  lora_r: 16
+  lora_alpha: 32
+  lora_dropout: 0.05
+epochs: 2
+batch_size: 16
+micro_batch_size: 8
+lr: 2.0e-4
+warmup_ratio: 0.03
+max_target_tokens: 384
