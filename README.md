@@ -1,5 +1,7 @@
 # Two small model organisms of reward hacking on GSM8K
 
+[![tests](https://github.com/lobby9000/reward-hacking-gsm8k/actions/workflows/tests.yml/badge.svg)](https://github.com/lobby9000/reward-hacking-gsm8k/actions/workflows/tests.yml)
+
 SFT, DPO and GRPO written from scratch in PyTorch, then used to study what a 0.5B language model learns when its RL grader has a loophole. Two loopholes, two experiments:
 
 1. **A biased grader (sycophancy).** The grader also accepts the answer the user suggested, even when it is wrong. Does the model learn to agree with the user instead of solving the problem, and does its reasoning show it?
