@@ -7,6 +7,8 @@ SFT, DPO and GRPO written from scratch in PyTorch, then used to study what a 0.5
 1. **A biased grader (sycophancy).** The grader also accepts the answer the user suggested, even when it is wrong. Does the model learn to agree with the user instead of solving the problem, and does its reasoning show it?
 2. **A lenient grader (hedging).** The grader accepts an answer if the right number appears anywhere on the final line, so `#### 24 or 72` scores like `#### 72`. Does a small, seeded habit of listing several answers die out or take over?
 
+**Try the graders in your browser:** the [`reward` demo](https://lobby9000.github.io/professional.html?app=terminal&run=reward) on my site scores hand-written answers, or one you type, with the three graders and the chain-of-thought monitors. It is a port of `posttrain/grading.py` and `posttrain/monitors.py` and checks itself against them.
+
 > **Status: code complete and tested, experiments running.** Everything under "Results" will be filled in from `results/` once the Colab runs finish. No number in this README is projected or invented.
 
 ## Setup shared by both experiments
