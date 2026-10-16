@@ -118,6 +118,7 @@ def analysis_notebook():
             "commit it to the repository."),
         new_code_cell(SETUP.replace("\n!nvidia-smi --query-gpu=name,memory.total --format=csv,noheader", "")),
         new_code_cell("!python scripts/analyze.py --runs runs --out results\n"
+                      "!python scripts/deep_checks.py --runs runs --out results\n"
                       "!mkdir -p {DRIVE_DIR}/results && cp -r results/* {DRIVE_DIR}/results/"),
         new_code_cell("from IPython.display import Image, Markdown, display\n"
                       "for name in [\"pipeline\", \"sycophancy_training\", \"sycophancy_conditions\", "

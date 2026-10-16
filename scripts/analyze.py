@@ -121,17 +121,24 @@ def header(fig, caption: str, handles=None, labels=None) -> None:
 
 
 def end_labels(ax, series: list[tuple[str, np.ndarray, np.ndarray]]) -> None:
-    """Direct labels at line ends, nudged apart when they would overlap. Text stays in ink."""
+    """Direct labels at line ends, spread apart when they would overlap and kept inside the axes. Text stays in ink."""
     ends = [(label, x[~np.isnan(y)][-1], y[~np.isnan(y)][-1]) for label, x, y in series if np.any(~np.isnan(y))]
+    if not ends:
+        return
     ends.sort(key=lambda e: e[2])
     lo, hi = ax.get_ylim()
-    min_gap = 0.07 * (hi - lo)
-    placed: list[float] = []
-    for label, x, y in ends:
-        ty = y if not placed else max(y, placed[-1] + min_gap)
-        placed.append(ty)
-        ax.annotate(label, (x, y), xytext=(6, (ty - y) / (hi - lo) * ax.bbox.height * 0.6), textcoords="offset points",
-                    fontsize=7.5, color=INK_2, va="center")
+    gap = 0.08 * (hi - lo)
+    ys = [e[2] for e in ends]
+    for i in range(1, len(ys)):  # push up to make room
+        ys[i] = max(ys[i], ys[i - 1] + gap)
+    overflow = ys[-1] - (hi - gap / 2)
+    if overflow > 0:  # then shift everything down so the top label stays inside the axes
+        ys = [y - overflow for y in ys]
+        for i in range(len(ys) - 2, -1, -1):
+            ys[i] = min(ys[i], ys[i + 1] - gap)
+    for (label, x, _), ty in zip(ends, ys):
+        ax.annotate(label, xy=(x, max(ty, lo + gap / 4)), xytext=(6, 0), textcoords="offset points",
+                    fontsize=7.5, color=INK_2, va="center", annotation_clip=False)
 
 
 def save(fig, path: Path, top: float = 1.0) -> None:
@@ -141,8 +148,8 @@ def save(fig, path: Path, top: float = 1.0) -> None:
     print(f"wrote {path}")
 
 
-def short(label: str) -> str:
-    return label.split(" grader")[0].split(" +")[0]
+SHORT = {"grpo_strict": "Strict", "grpo_biased": "Biased", "grpo_biased_monitored": "Monitored",
+         "grpo_hedge_strict": "Strict", "grpo_hedge_lenient": "Lenient"}
 
 
 # ---------------------------------------------------------------- figures
@@ -197,7 +204,7 @@ def fig_training(runs: Path, out: Path, run_styles: dict, panels: list[tuple], f
                 y = np.array([np.nan if e.get(key) is None else e[key] for e in points], dtype=float)
                 ax.plot(x, y, color=color, linewidth=1.6, marker="o", markersize=4.5, markeredgecolor=SURFACE,
                         markeredgewidth=1.0, label=label)
-            series.append((short(label), x, y))
+            series.append((SHORT[name], x, y))
         style(ax, title, percent=percent)
         if percent:
             ax.set_ylim(0, 1.0)
@@ -241,7 +248,8 @@ def fig_checkpoint_bars(evals: dict, out: Path, names: list[str], styles: dict, 
 
 def fig_deferral_monitors(runs: Path, out: Path) -> None:
     logs = {name: read_jsonl(runs / name / "metrics.jsonl") for name in EXP1_RUNS}
-    logs = {k: v for k, v in logs.items() if v and sum(r.get("n_deferred", 0) for r in v) >= 100}
+    # Only the runs whose grader rewards copying; the strict run copies too rarely for a stable curve.
+    logs = {k: v for k, v in logs.items() if v and k != "grpo_strict"}
     if not logs:
         return
     panels = [("deferred_flagged", "Flagged by the consistency monitor"),
@@ -256,7 +264,7 @@ def fig_deferral_monitors(runs: Path, out: Path) -> None:
             y = rolling([r[key] for r in records], [r["n_deferred"] for r in records], window=2 * WINDOW,
                         min_weight=10)  # hide stretches with fewer than 10 deferred answers
             ax.plot(x, y, color=color, linewidth=1.6, label=label)
-            series.append((short(label), x, y))
+            series.append((SHORT[name], x, y))
         style(ax, title)
         ax.set_ylim(0, 1.0)
         ax.set_xlabel("GRPO step", fontsize=8, color=INK_2)
@@ -476,7 +484,7 @@ def main() -> None:
         ("Hedge rate (training samples)", "train", "hedge_rate", None, True),
         ("Held-out strict accuracy", "clean", "accuracy", None, True),
         ("Held-out hedge rate", "clean", "hedge_rate", None, True),
-        ("Candidates on the final line (mean)", "train", "mean_candidates", None, False),
+        ("Numbers on the final line (mean, all samples)", "train", "mean_candidates", None, False),
     ], "hedging_training.png",
         f"Experiment 2. Training curves: rolling mean over {WINDOW} steps. Held-out panels: 200 test problems, greedy."))
     exp1_styles = {"dpo": ("Before RL (DPO)", GRAY), **EXP1_RUNS}

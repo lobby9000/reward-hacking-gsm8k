@@ -91,6 +91,15 @@ def test_full_pipeline(tiny_model_dir, tmp_path, fake_graders):
                                conditions=["clean"], n_clean=2, fewshot=2, max_new_tokens=6))
     assert base["summaries"][0]["n"] == 2
 
+    # The analysis scripts run on partial results without errors.
+    import subprocess
+    import sys
+    root = Path(__file__).resolve().parents[1]
+    for script in ("analyze.py", "deep_checks.py"):
+        subprocess.run([sys.executable, str(root / "scripts" / script), "--runs", str(runs), "--out", str(tmp_path / "results")],
+                       check=True, capture_output=True)
+    assert (tmp_path / "results" / "summary.md").exists() and (tmp_path / "results" / "checks.md").exists()
+
 
 def test_hedging_experiment(tiny_model_dir, tmp_path, fake_graders):
     runs = tmp_path / "runs"
